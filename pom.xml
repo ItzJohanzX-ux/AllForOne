@@ -3,34 +3,34 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <!-- 1. Basic Project Information -->
+    <!-- Basic Project Metadata -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>johan.anticheat</groupId> <!-- Unique identifier for your code -->
-    <artifactId>AdvancedAnticheat</artifactId> <!-- Plugin JAR name (before version) -->
-    <version>1.0-SNAPSHOT</version> <!-- Plugin version -->
-    <packaging>jar</packaging> <!-- We're building a JAR file -->
-    <name>AdvancedAnticheat</name> <!-- Human-readable name -->
-    <description>Custom anticheat plugin for Minecraft 1.21.8 using PacketEvents</description>
+    <groupId>johan.anticheat</groupId>
+    <artifactId>AdvancedAnticheat</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>AdvancedAnticheat</name>
+    <description>Custom anticheat for Minecraft 1.21.8 using PacketEvents</description>
 
 
-    <!-- 2. Core Properties (Java Version, Encoding) -->
+    <!-- Core Configuration (Java Version, Encoding) -->
     <properties>
-        <java.version>21</java.version> <!-- Matches your server's Java 21 -->
-        <maven.compiler.source>${java.version}</maven.compiler.source> <!-- Compile with Java 21 -->
-        <maven.compiler.target>${java.version}</maven.compiler.target> <!-- Target Java 21 -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- Avoids garbled text -->
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
 
-    <!-- 3. Repositories (Where Maven Downloads Dependencies From) -->
+    <!-- Repositories (Where Maven Downloads Dependencies) -->
     <repositories>
-        <!-- PaperMC Repo: For Paper/Bukkit API -->
+        <!-- PaperMC: For Bukkit/Paper API -->
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
 
-        <!-- Retrooper Repo: For PacketEvents API -->
+        <!-- Retrooper: For PacketEvents API -->
         <repository>
             <id>packetevents-repo</id>
             <url>https://repo.retrooper.io/repository/maven-public/</url>
@@ -38,10 +38,9 @@
     </repositories>
 
 
-    <!-- 4. Dependencies (What Your Plugin Needs to Run/Compile) -->
-    <dependencies>
-        <!-- Paper API (Minecraft 1.21.8) -->
-        <!-- "provided" = Server already has this—no need to package it in your JAR -->
+    <!-- Dependencies (Critical: No More Typos!) -->
+    <<dependencies>
+        <!-- Paper API (Minecraft 1.21.8) - Server provides this at runtime -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -49,8 +48,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- PacketEvents API (Compatible with 1.21.8) -->
-        <!-- Use the LATEST version from: https://github.com/retrooper/packetevents/releases -->
+        <!-- PacketEvents API (v2.10.1 - Compatible with 1.21.8) - Server provides this -->
         <dependency>
             <groupId>com.github.retrooper</groupId>
             <artifactId>packetevents-api</artifactId>
@@ -60,12 +58,12 @@
     </</dependencies>
 
 
-    <!-- 5. Build Configuration (Packages Your Plugin into a Working JAR) -->
+    <!-- Build Configuration (Packages Your Plugin) -->
     <build>
-        <finalName>AdvancedAnticheat</finalName> <!-- Output JAR name (e.g., AdvancedAnticheat.jar) -->
+        <finalName>AdvancedAnticheat</finalName> <!-- Output JAR: AdvancedAnticheat.jar -->
         <plugins>
 
-            <!-- Plugin 1: Compile Code with Java 21 -->
+            <!-- Compile Code with Java 21 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -76,8 +74,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin 2: Package Dependencies (If Needed) -->
-            <!-- Use this if you add custom libraries later—packs them into your JAR -->
+            <!-- Shade Dependencies (Optional: For custom libraries later) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -92,8 +89,7 @@
                 </executions>
             </plugin>
 
-            <!-- Plugin 3: Set Main Class in JAR Manifest -->
-            <!-- Tells the server which class to run (your main AdvancedAnticheat class) -->
+            <!-- Set Main Class in JAR Manifest -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -101,7 +97,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>johan.anticheat.AdvancedAnticheat</mainClass> <!-- Your main class -->
+                            <mainClass>johan.anticheat.AdvancedAnticheat</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
