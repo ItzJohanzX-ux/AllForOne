@@ -16,18 +16,16 @@ public class AdvancedAnticheat extends JavaPlugin {
     private CheckManager checkManager;
 
     @Override
-    public void onLoad(){
-        PacketEvents.getAPI().getSettings()
-                .reEncodeByDefault(true)
-                .checkForUpdates(false);
-        PacketEvents.getAPI().load();
-    }
-
-    @Override
     public void onEnable(){
         instance = this;
         saveDefaultConfig();
         checkManager = new CheckManager();
+
+        // init PacketEvents here instead of onLoad
+        PacketEvents.getAPI().getSettings()
+                .reEncodeByDefault(true)
+                .checkForUpdates(false);
+        PacketEvents.getAPI().init();
 
         PacketEvents.getAPI().getEventManager().registerListener(
                 new com.github.retrooper.packetevents.event.PacketListener() {
@@ -40,7 +38,6 @@ public class AdvancedAnticheat extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         getCommand("anticheat").setExecutor(new AnticheatCommand());
 
-        PacketEvents.getAPI().init();
         new Metrics(this, 22222);
     }
 
