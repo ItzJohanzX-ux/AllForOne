@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <!-- 1. BASIC PROJECT INFORMATION -->
     <modelVersion>4.0.0</modelVersion>
     <groupId>johan.anticheat</groupId>
     <artifactId>AdvancedAnticheat</artifactId>
@@ -12,8 +11,6 @@
     <name>AdvancedAnticheat</name>
     <description>Custom anticheat for Minecraft 1.21.8 using PacketEvents</description>
 
-
-    <!-- 2. CORE CONFIGURATION (Java 21) -->
     <properties>
         <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -21,8 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-
-    <!-- 3. REPOSITORIES -->
+    <!-- UPDATED REPOSITORIES (PacketEvents URL is now working!) -->
     <repositories>
         <!-- PaperMC: For Bukkit/Paper API -->
         <repository>
@@ -30,17 +26,15 @@
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
 
-        <!-- Retrooper: For PacketEvents API -->
+        <!-- PacketEvents: Current working repository -->
         <repository>
-            <id>packetevents-repo</id>
-            <url>https://repo.retrooper.io/repository/maven-public/</url>
+            <id>retrooper-repo</id>
+            <url>https://repo.retrooper.io/maven2/</url>
         </repository>
     </repositories>
 
-
-    <!-- 4. DEPENDENCIES (FINALLY CORRECT - NO EXTRA <!) -->
     <dependencies>
-        <!-- Paper API (Minecraft 1.21.8) - Server provides this at runtime -->
+        <!-- Paper API (Minecraft 1.21.8) -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -48,7 +42,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- PacketEvents API (v2.10.1 - Compatible with 1.21.8) - Server provides this -->
+        <!-- PacketEvents API (v2.10.1 - Compatible with 1.21.8) -->
         <dependency>
             <groupId>com.github.retrooper</groupId>
             <artifactId>packetevents-api</artifactId>
@@ -57,13 +51,10 @@
         </dependency>
     </dependencies>
 
-
-    <!-- 5. BUILD CONFIGURATION -->
     <build>
         <finalName>AdvancedAnticheat</finalName>
         <plugins>
-
-            <!-- Compile with Java 21 (supports switch expressions/pattern matching) -->
+            <!-- Compile with Java 21 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -74,7 +65,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Shade Plugin (Optional: Packs custom libraries into JAR) -->
+            <!-- Shade Plugin (Optional) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -89,7 +80,7 @@
                 </executions>
             </plugin>
 
-            <!-- Jar Plugin (Sets main class for server) -->
+            <!-- Jar Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -104,5 +95,6 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
 
