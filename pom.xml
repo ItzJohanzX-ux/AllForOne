@@ -3,32 +3,26 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <!-- --------------------------
-         1. BASIC PROJECT INFORMATION
-         -------------------------- -->
+    <!-- 1. BASIC PROJECT INFORMATION -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>johan.anticheat</groupId>       <!-- Unique ID for your code -->
-    <artifactId>AdvancedAnticheat</artifactId> <!-- Name of your plugin JAR -->
-    <version>1.0-SNAPSHOT</version>          <!-- Plugin version -->
-    <packaging>jar</packaging>               <!-- Build a JAR file -->
-    <name>AdvancedAnticheat</name>           <!-- Human-readable name -->
+    <groupId>johan.anticheat</groupId>
+    <artifactId>AdvancedAnticheat</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>AdvancedAnticheat</name>
     <description>Custom anticheat for Minecraft 1.21.8 using PacketEvents</description>
 
 
-    <!-- --------------------------
-         2. CORE CONFIGURATION
-         -------------------------- -->
+    <!-- 2. CORE CONFIGURATION -->
     <properties>
-        <java.version>21</java.version>       <!-- Match your server's Java version -->
-        <maven.compiler.source>${java.version}</maven.compiler.source> <!-- Compile with Java 21 -->
-        <maven.compiler.target>${java.version}</maven.compiler.target> <!-- Target Java 21 -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- Avoid gar garbledtext encoding -->
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
 
-    <!-- --------------------------
-         3. REPOSITORIES (WHERE MAVEN DOWNLOADS DEPENDENCIES)
-         -------------------------- -->
+    <!-- 3. REPOSITORIES (WHERE MAVEN DOWNLOADS DEPENDENCIES) -->
     <repositories>
         <!-- PaperMC: For Bukkit/Paper API -->
         <repository>
@@ -44,9 +38,7 @@
     </repositories>
 
 
-    <!-- --------------------------
-         4. DEPENDENCIES (WHAT YOUR PLUGIN NEEDS)
-         -------------------------- -->
+    <!-- 4. DEPENDENCIES (WHAT YOUR PLUGIN NEEDS) -->
     <<dependencies>
         <!-- Paper API (Minecraft 1.21.8) - Server provides this at runtime -->
         <dependency>
@@ -66,25 +58,23 @@
     </</dependencies>
 
 
-    <!-- --------------------------
-         5. BUILD CONFIGURATION (PACKAGES YOUR PLUGIN)
-         -------------------------- -->
+    <!-- 5. BUILD CONFIGURATION (PACKAGES YOUR PLUGIN) -->
     <build>
-        <finalName>AdvancedAnticheat</finalName> <!-- Output JAR: AdvancedAnticheat.jar -->
+        <finalName>AdvancedAnticheat</finalName>
         <plugins>
 
-            <!-- Compile Code with Java 21 (supports your modern features) -->
+            <!-- Compile Code with Java 21 (supports modern features) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version> <!-- Supports Java 21 fully -->
+                <version>3.12.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
 
-            <!-- Shade Plugin (Optional: Packs custom libraries into your JAR later) -->
+            <!-- Shade Plugin (Optional: Packs custom libraries into JAR) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -99,7 +89,7 @@
                 </executions>
             </plugin>
 
-            <!-- Jar Plugin (Sets your main class so the server knows how to run your plugin) -->
+            <!-- Jar Plugin (Sets main class for server) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -107,7 +97,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>johan.anticheat.AdvancedAnticheat</mainClass> <!-- Your main plugin class -->
+                            <mainClass>johan.anticheat.AdvancedAnticheat</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
