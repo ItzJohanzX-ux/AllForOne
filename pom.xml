@@ -22,7 +22,7 @@
     </properties>
 
 
-    <!-- 3. REPOSITORIES (WHERE MAVEN DOWNLOADS DEPENDENCIES) -->
+    <!-- 3. REPOSITORIES -->
     <repositories>
         <!-- PaperMC: For Bukkit/Paper API -->
         <repository>
@@ -40,7 +40,7 @@
 
     <!-- 4. DEPENDENCIES (FINALLY CORRECT TAGS!) -->
     <<dependencies>
-        <!-- Paper API (Minecraft 1.21.8) - Server provides this at runtime -->
+        <!-- Paper API (Minecraft 1.21.8) - Server provides this -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -48,7 +48,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- PacketEvents API (v2.10.1 - Compatible with 1.21.8) - Server provides this -->
+        <!-- PacketEvents API (v2.10.1) - Server provides this -->
         <dependency>
             <groupId>com.github.retrooper</groupId>
             <artifactId>packetevents-api</artifactId>
@@ -58,12 +58,12 @@
     </</dependencies>
 
 
-    <!-- 5. BUILD CONFIGURATION (PACKAGES YOUR PLUGIN) -->
+    <!-- 5. BUILD CONFIGURATION -->
     <build>
         <finalName>AdvancedAnticheat</finalName>
         <plugins>
 
-            <!-- Compile Code with Java 21 (supports modern features) -->
+            <!-- Compile with Java 21 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -74,7 +74,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Shade Plugin (Optional: Packs custom libraries into JAR) -->
+            <!-- Shade Plugin (Optional) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -89,7 +89,7 @@
                 </executions>
             </plugin>
 
-            <!-- Jar Plugin (Sets main class for server) -->
+            <!-- Jar Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
