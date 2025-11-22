@@ -1,55 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <!-- --------------------------
+         1. BASIC PROJECT INFORMATION
+         -------------------------- -->
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>johan.anticheat</groupId>       <!-- Unique ID for your code -->
+    <artifactId>AdvancedAnticheat</artifactId> <!-- Name of your plugin JAR -->
+    <version>1.0-SNAPSHOT</version>          <!-- Plugin version -->
+    <packaging>jar</packaging>               <!-- Build a JAR file -->
+    <name>AdvancedAnticheat</name>           <!-- Human-readable name -->
+    <description>Custom anticheat for Minecraft 1.21.8 using PacketEvents</description>
 
-  <groupId>com.example</groupId>
-  <artifactId>allforone</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  <name>AllForOne</name>
-  <description>Example project POM template</description>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <junit.jupiter.version>5.10.0</junit.jupiter.version>
-  </properties>
+    <!-- --------------------------
+         2. CORE CONFIGURATION
+         -------------------------- -->
+    <properties>
+        <java.version>21</java.version>       <!-- Match your server's Java version -->
+        <maven.compiler.source>${java.version}</maven.compiler.source> <!-- Compile with Java 21 -->
+        <maven.compiler.target>${java.version}</maven.compiler.target> <!-- Target Java 21 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- Avoid gar garbledtext encoding -->
+    </properties>
 
-  <dependencies>
-    <!-- Example dependency: JUnit 5 for tests -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>${junit.jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- Add your real dependencies here -->
-  </dependencies>
 
-  <build>
-    <plugins>
-      <!-- Compiler plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
-        <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
-        </configuration>
-      </plugin>
+    <!-- --------------------------
+         3. REPOSITORIES (WHERE MAVEN DOWNLOADS DEPENDENCIES)
+         -------------------------- -->
+    <repositories>
+        <!-- PaperMC: For Bukkit/Paper API -->
+        <repository>
+            <id>papermc-repo</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
 
-      <!-- Surefire for running tests -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.1.2</version>
-      </plugin>
-    </plugins>
-  </build>
+        <!-- Retrooper: For PacketEvents API -->
+        <repository>
+            <id>packetevents-repo</id>
+            <url>https://repo.retrooper.io/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+
+    <!-- --------------------------
+         4. DEPENDENCIES (WHAT YOUR PLUGIN NEEDS)
+         -------------------------- -->
+    <<dependencies>
+        <!-- Paper API (Minecraft 1.21.8) - Server provides this at runtime -->
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.21.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- PacketEvents API (v2.10.1 - Compatible with 1.21.8) - Server provides this -->
+        <dependency>
+            <groupId>com.github.retrooper</groupId>
+            <artifactId>packetevents-api</artifactId>
+            <version>2.10.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </</dependencies>
+
+
+    <!-- --------------------------
+         5. BUILD CONFIGURATION (PACKAGES YOUR PLUGIN)
+         -------------------------- -->
+    <build>
+        <finalName>AdvancedAnticheat</finalName> <!-- Output JAR: AdvancedAnticheat.jar -->
+        <plugins>
+
+            <!-- Compile Code with Java 21 (supports your modern features) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.12.1</version> <!-- Supports Java 21 fully -->
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Shade Plugin (Optional: Packs custom libraries into your JAR later) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Jar Plugin (Sets your main class so the server knows how to run your plugin) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>johan.anticheat.AdvancedAnticheat</mainClass> <!-- Your main plugin class -->
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
+
