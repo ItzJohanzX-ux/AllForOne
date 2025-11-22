@@ -16,36 +16,31 @@ public class AdvancedAnticheat extends JavaPlugin {
     private CheckManager checkManager;
 
     @Override
-    public void onEnable(){
-        instance = this;
-        saveDefaultConfig();          // creates config.yml if absent
-        checkManager = new CheckManager();
+public void onEnable(){
+    instance = this;
+    saveDefaultConfig();
+    checkManager = new CheckManager();
 
-        // init PacketEvents first
-        PacketEvents.init(this);
-        PacketEvents.getAPI().getSettings()
-                .reEncodeByDefault(true)
-                .checkForUpdates(false);
-        PacketEvents.getAPI().init();
+    // PacketEvents auto-initialises – just register listener
+    PacketEvents.getAPI().getEventManager().registerListener(
+            new com.github.retrooper.packetevents.event.PacketListener() {
+                @Override
+                public void onPacketReceive(com.github.retrooper.packetevents.event.PacketReceiveEvent event) {
+                    ((PacketListener) new PacketListener()).onPacketReceive(event);
+                }
+            },
+            PacketListenerPriority.LOW);
+    Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+    getCommand("anticheat").setExecutor(new AnticheatCommand());
 
-        PacketEvents.getAPI().getEventManager().registerListener(
-                new com.github.retrooper.packetevents.event.PacketListener() {
-                    @Override
-                    public void onPacketReceive(com.github.retrooper.packetevents.event.PacketReceiveEvent event) {
-                        ((PacketListener) new PacketListener()).onPacketReceive(event);
-                    }
-                },
-                PacketListenerPriority.LOW);
-        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-        getCommand("anticheat").setExecutor(new AnticheatCommand());
+    new Metrics(this, 22222);
+}
 
-        new Metrics(this, 22222);
-    }
+@Override
+public void onDisable(){
+    /* PacketEvents shuts itself down – nothing to do */
+}
 
-    @Override
-    public void onDisable(){
-        if (PacketEvents.getAPI() != null) PacketEvents.getAPI().terminate();
-    }
 
     public static AdvancedAnticheat getInstance(){
         return instance;
