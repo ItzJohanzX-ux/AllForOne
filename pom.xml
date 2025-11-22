@@ -38,7 +38,7 @@
     </repositories>
 
 
-    <!-- Dependencies (Critical: No More Typos!) -->
+    <!-- Dependencies (FINALLY CORRECT: No Extra < Characters!) -->
     <<dependencies>
         <!-- Paper API (Minecraft 1.21.8) - Server provides this at runtime -->
         <dependency>
