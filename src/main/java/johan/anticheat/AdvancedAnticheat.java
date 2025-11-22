@@ -21,7 +21,7 @@ public class AdvancedAnticheat extends JavaPlugin {
     private CheckManager checkManager;
 
     @Override public void onLoad(){
-        PacketEvents.getAPI().getSettings().reEncodeByDefault(true).checkForUpdates(false).lateBind(true);
+        PacketEvents.getAPI().getSettings().reEncodeByDefault(true).checkForUpdates(false);
         PacketEvents.getAPI().load();
     }
     @Override public void onEnable(){
