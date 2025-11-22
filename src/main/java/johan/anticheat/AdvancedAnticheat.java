@@ -1,34 +1,35 @@
 package johan.anticheat;
 
-import com.github.retrooper.packetevents.PacketEvents;
-import com.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
-import com.github.retrooper.packetevents.manager.event.EventManager;
+import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.manager.event.EventManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import johan.anticheat.listener.PacketListener;
 
 public class AdvancedAnticheat extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        // Initialize PacketEvents API
-        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        // Create PacketEvents instance
+        PacketEvents.create(this);
+        PacketEvents.get().load();
     }
 
     @Override
     public void onEnable() {
-        // Start PacketEvents
-        PacketEvents.getAPI().load();
+        // Initialize PacketEvents
+        PacketEvents.get().init();
 
-        // Register packet listeners
-        EventManager eventManager = PacketEvents.getAPI().getEventManager();
+        // Register packet listener
+        EventManager eventManager = PacketEvents.get().getEventManager();
         eventManager.registerListener(new PacketListener());
 
-        getLogger().info("AdvancedAnticheat enabled with PacketEvents v2.");
+        getLogger().info("AdvancedAnticheat enabled with PacketEvents 2.3.0.");
     }
 
     @Override
     public void onDisable() {
-        PacketEvents.getAPI().terminate();
+        PacketEvents.get().terminate();
         getLogger().info("AdvancedAnticheat disabled.");
     }
 }
