@@ -1,21 +1,31 @@
 package johan.anticheat.listener;
+
 import com.github.retrooper.packetevents.event.PacketListenerAbstract;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
-import johan.anticheat.AdvancedAnticheat;
-import johan.anticheat.check.impl.KillAuraCheck;
 import johan.anticheat.profile.PlayerProfile;
+import johan.anticheat.util.PacketUtil;
 
 public class PacketListener extends PacketListenerAbstract {
-    private final KillAuraCheck killAuraCheck=new KillAuraCheck();
-    public PacketListener(){ super(PacketListenerPriority.LOW); }
-    @Override public void onPacketReceive(PacketReceiveEvent e){
-        PlayerListener pl=(PlayerListener) AdvancedAnticheat.getInstance().getServer().getPluginManager().getPlugin("AdvancedAnticheat");
-        PlayerProfile prof=pl==null?null:pl.getProfile(e.getUser().getUUID());
-        if(prof==null) return;
-        if(e.getPacketType()==PacketType.Play.Client.PONG) prof.incrementPackets();
-        killAuraCheck.onPacketReceive(e);
+
+    // Set priority (NORMAL is fine for most checks)
+    public PacketListener() {
+        super(PacketListenerPriority.NORMAL);
+    }
+
+    // Example: Listen for player movement packets
+    @Override
+    public void onPacketReceive(PacketReceiveEvent event) {
+        if (event.getPacketType() == PacketType.Play.Client.POSITION ||
+            event.getPacketType() == PacketType.Play.Client.POSITION_AND_ROTATION) {
+
+            // Get the player's profile (replace with your profile system)
+            PlayerProfile profile = PlayerProfile.getByPlayer(event.getPlayer());
+
+            // Run your checks (e.g., FlightCheck, SpeedCheck)
+            profile.getCheckManager().runMovementChecks(event);
+        }
     }
 }
 
