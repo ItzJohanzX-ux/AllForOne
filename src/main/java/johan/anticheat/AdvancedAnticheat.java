@@ -22,7 +22,7 @@ public class AdvancedAnticheat extends JavaPlugin {
         checkManager = new CheckManager();
 
         // init PacketEvents first
-        PacketEvents.create(this);
+        PacketEvents.init(this);
         PacketEvents.getAPI().getSettings()
                 .reEncodeByDefault(true)
                 .checkForUpdates(false);
