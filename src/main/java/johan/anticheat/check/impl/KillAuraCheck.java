@@ -10,7 +10,7 @@ import java.util.*;
 public class KillAuraCheck extends Check {
     private final Map<java.util.UUID,Long> lastSwing=new HashMap<>();
     public KillAuraCheck(){ super("KillAura",30,10000L,"No swing before attack"); }
-    @Override public void check(PlayerProfile profile){ /* empty: packet-only */ }
+    @Override public void check(PlayerProfile profile){ /* packet only */ }
     public void onPacketReceive(PacketReceiveEvent e){
         if(e.getPacketType()==PacketType.Play.Client.ANIMATION) lastSwing.put(e.getUser().getUUID(),System.currentTimeMillis());
         if(e.getPacketType()==PacketType.Play.Client.INTERACT_ENTITY){
@@ -18,10 +18,13 @@ public class KillAuraCheck extends Check {
             if(w.getAction()==WrapperPlayClientInteractEntity.InteractAction.ATTACK){
                 long last=lastSwing.getOrDefault(e.getUser().getUUID(),0L);
                 if(System.currentTimeMillis()-last>250L){
-                    PlayerProfile prof=(PlayerProfile) johan.anticheat.AdvancedAnticheat.getInstance().getCheckManager().getClass().getClassLoader()
-                        .loadClass("johan.anticheat.listener.PlayerListener").newInstance().getClass().getMethod("getProfile",java.util.UUID.class)
-                        .invoke(johan.anticheat.AdvancedAnticheat.getInstance().getServer().getPluginManager().getPlugin("AdvancedAnticheat"),e.getUser().getUUID());
-                    if(prof!=null) flag(prof,"no-swing");
+                    // get profile via singleton
+                    johan.anticheat.listener.PlayerListener pl = (johan.anticheat.listener.PlayerListener)
+                        johan.anticheat.AdvancedAnticheat.getInstance().getServer().getPluginManager().getPlugin("AdvancedAnticheat");
+                    if(pl!=null){
+                        PlayerProfile prof = pl.getProfile(e.getUser().getUUID());
+                        if(prof!=null) flag(prof,"no-swing");
+                    }
                 }
             }
         }
