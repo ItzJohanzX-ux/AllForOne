@@ -41,11 +41,11 @@ roject metadata -->
     <!-- Dependencies -->
     <dependencies>
         <!-- PacketEvents API (updated to a valid version) -->
+        <!-- https://mvnrepository.com/artifact/io.github.retrooper.packetevents/api -->
         <dependency>
-            <groupId>com.github.retrooper</groupId>
-            <artifactId>packetevents-api</artifactId>
-            <version>2.2.0</version>  <!-- Updated from 2.10.1 to a valid release -->
-            <scope>provided</scope>
+            <groupId>io.github.retrooper.packetevents</groupId>
+            <artifactId>api</artifactId>
+            <version>2.2.0</version>
         </dependency>
 
         <!-- Paper API (common for Minecraft plugins; remove if not needed) -->
