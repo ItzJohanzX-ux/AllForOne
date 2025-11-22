@@ -8,7 +8,6 @@ import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bstats.bukkit.Metrics;
 
 public class AdvancedAnticheat extends JavaPlugin {
 
@@ -21,7 +20,6 @@ public class AdvancedAnticheat extends JavaPlugin {
         saveDefaultConfig();
         checkManager = new CheckManager();
 
-        // PE 2.10 auto-starts – just register listener
         PacketEvents.getAPI().getEventManager().registerListener(
                 new com.github.retrooper.packetevents.event.PacketListener() {
                     @Override
@@ -32,13 +30,11 @@ public class AdvancedAnticheat extends JavaPlugin {
                 PacketListenerPriority.LOW);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         getCommand("anticheat").setExecutor(new AnticheatCommand());
-
-        new Metrics(this, 22222);
     }
 
     @Override
     public void onDisable(){
-        // PE auto-stops – nothing to do
+        // PacketEvents auto-stops – nothing to do
     }
 
     public static AdvancedAnticheat getInstance(){
