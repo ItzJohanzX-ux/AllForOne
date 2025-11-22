@@ -28,15 +28,19 @@ public class CheckManager {
         return checks;
     }
 
-    // quick helper to grab a profile via the singleton listener
+    // safe profile fetch
     public PlayerProfile getProfile(UUID uuid){
-        PlayerListener listener = (PlayerListener) Bukkit.getPluginManager()
-                .getPlugin("AdvancedAnticheat")
-                .getClass()
-                .getClassLoader()
-                .loadClass("johan.anticheat.listener.PlayerListener")
-                .newInstance();
-        return listener.getProfile(uuid);
+        try{
+            PlayerListener listener = (PlayerListener) Bukkit.getPluginManager()
+                    .getPlugin("AdvancedAnticheat")
+                    .getClass()
+                    .getClassLoader()
+                    .loadClass("johan.anticheat.listener.PlayerListener")
+                    .newInstance();
+            return listener.getProfile(uuid);
+        }catch(Exception e){
+            return null;
+        }
     }
 }
 
