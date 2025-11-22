@@ -39,7 +39,7 @@
 
 
     <!-- Dependencies (FINALLY CORRECT: No Extra < Characters!) -->
-    <<dependencies>
+    <dependencies>
         <!-- Paper API (Minecraft 1.21.8) - Server provides this at runtime -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
