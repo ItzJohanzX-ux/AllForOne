@@ -13,7 +13,7 @@
     <description>Custom anticheat for Minecraft 1.21.8 using PacketEvents</description>
 
 
-    <!-- 2. CORE CONFIGURATION -->
+    <!-- 2. CORE CONFIGURATION (Java 21) -->
     <properties>
         <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -38,9 +38,9 @@
     </repositories>
 
 
-    <!-- 4. DEPENDENCIES (FINALLY CORRECT TAGS!) -->
-    <<dependencies>
-        <!-- Paper API (Minecraft 1.21.8) - Server provides this -->
+    <!-- 4. DEPENDENCIES (FINALLY CORRECT - NO EXTRA <!) -->
+    <dependencies>
+        <!-- Paper API (Minecraft 1.21.8) - Server provides this at runtime -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -48,14 +48,14 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- PacketEvents API (v2.10.1) - Server provides this -->
+        <!-- PacketEvents API (v2.10.1 - Compatible with 1.21.8) - Server provides this -->
         <dependency>
             <groupId>com.github.retrooper</groupId>
             <artifactId>packetevents-api</artifactId>
             <version>2.10.1</version>
             <scope>provided</scope>
         </dependency>
-    </</dependencies>
+    </dependencies>
 
 
     <!-- 5. BUILD CONFIGURATION -->
@@ -63,7 +63,7 @@
         <finalName>AdvancedAnticheat</finalName>
         <plugins>
 
-            <!-- Compile with Java 21 -->
+            <!-- Compile with Java 21 (supports switch expressions/pattern matching) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -74,7 +74,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Shade Plugin (Optional) -->
+            <!-- Shade Plugin (Optional: Packs custom libraries into JAR) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -89,7 +89,7 @@
                 </executions>
             </plugin>
 
-            <!-- Jar Plugin -->
+            <!-- Jar Plugin (Sets main class for server) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -102,9 +102,7 @@
                     </archive>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
-
 </project>
 
