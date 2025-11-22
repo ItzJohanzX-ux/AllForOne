@@ -1,53 +1,74 @@
 package johan.anticheat;
 
-import johan.anticheat.check.CheckManager;
-import johan.anticheat.command.AnticheatCommand;
+import org.bukkit.plugin.java.JavaPlugin;
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.PacketListenerAbstract;
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
+import com.github.retrooper.packetevents.event.PostInitEvent;
 import johan.anticheat.listener.PlayerListener;
 import johan.anticheat.listener.PacketListener;
-import com.github.retrooper.packetevents.PacketEvents;
-import com.github.retrooper.packetevents.event.PacketListenerPriority;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bstats.bukkit.Metrics;
+import johan.anticheat.check.CheckManager;
+import johan.anticheat.command.AnticheatCommand;
 
 public class AdvancedAnticheat extends JavaPlugin {
 
+    // Singleton (so other classes can access your plugin instance)
     private static AdvancedAnticheat instance;
-    private CheckManager checkManager;
 
     @Override
-public void onEnable(){
-    instance = this;
-    saveDefaultConfig();
-    checkManager = new CheckManager();
+    public void onEnable() {
+        instance = this;
 
-    // PacketEvents auto-initialises – just register listener
-    PacketEvents.getAPI().getEventManager().registerListener(
-            new com.github.retrooper.packetevents.event.PacketListener() {
+        // Step 1: Check if PacketEvents is installed (fail fast if not)
+        if (getServer().getPluginManager().getPlugin("PacketEvents") == null) {
+            getLogger().severe("❌ PacketEvents is NOT installed! Disabling plugin.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        // Step 2: Wait for PacketEvents to FULLY initialize (API is ready now)
+        PacketEvents.getAPI().getEventManager().registerListener(
+            new PacketListenerAbstract(PacketListenerPriority.NORMAL) {
                 @Override
-                public void onPacketReceive(com.github.retrooper.packetevents.event.PacketReceiveEvent event) {
-                    ((PacketListener) new PacketListener()).onPacketReceive(event);
+                public void onPostInit(PostInitEvent event) {
+                    // Step 3: Initialize ALL your anticheat features HERE
+                    initializeAnticheat();
                 }
-            },
-            PacketListenerPriority.LOW);
-    Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-    getCommand("anticheat").setExecutor(new AnticheatCommand());
+            }
+        );
 
-    new Metrics(this, 22222);
-}
-
-@Override
-public void onDisable(){
-    /* PacketEvents shuts itself down – nothing to do */
-}
-
-
-    public static AdvancedAnticheat getInstance(){
-        return instance;
+        getLogger().info("✅ AdvancedAnticheat loaded—waiting for PacketEvents...");
     }
 
-    public CheckManager getCheckManager(){
-        return checkManager;
+    // Initialize everything ONLY after PacketEvents is ready
+    private void initializeAnticheat() {
+        // Load config (if you have one)
+        saveDefaultConfig();
+
+        // Initialize CheckManager
+        new CheckManager();
+
+        // Register Bukkit listener (PlayerListener)
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
+        // Register PacketEvents listener (YOUR PacketListener.java)
+        PacketEvents.getAPI().getEventManager().registerListener(new PacketListener());
+
+        // Register commands (AnticheatCommand)
+        getCommand("anticheat").setExecutor(new AnticheatCommand());
+
+        getLogger().info("✅ AdvancedAnticheat fully initialized with PacketEvents!");
+    }
+
+    @Override
+    public void onDisable() {
+        getLogger().info("❌ AdvancedAnticheat disabled.");
+        instance = null;
+    }
+
+    // Getter for singleton (use this in other classes: AdvancedAnticheat.getInstance())
+    public static AdvancedAnticheat getInstance() {
+        return instance;
     }
 }
 

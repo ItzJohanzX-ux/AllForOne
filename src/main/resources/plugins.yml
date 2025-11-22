@@ -1,15 +1,12 @@
 name: AdvancedAnticheat
-version: ${version}
-main: johan.anticheat.AdvancedAnticheat
-api-version: '1.21'
-authors: [Johan]
+version: 1.0-SNAPSHOT
+main: johan.anticheat.AdvancedAnticheat  # Your main class (matches layout)
+api-version: 1.21.8  # Match Minecraft version
+depend: [PacketEvents]  # CRITICAL: Load PacketEvents BEFORE your plugin
+description: Custom anticheat for my server
 commands:
-  anticheat:
-    description: Opens staff GUI
-    usage: /anticheat
-    permission: anticheat.staff
-permissions:
-  anticheat.staff:
-    default: op
-  anticheat.alert:
-    default: op
+  anticheat:  # If you have your AnticheatCommand
+    description: Anticheat commands
+    usage: /<command>
+    permission: advancedanticheat.admin
+

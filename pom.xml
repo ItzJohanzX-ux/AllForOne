@@ -39,7 +39,7 @@
 
 
     <!-- 4. Dependencies (What Your Plugin Needs to Run/Compile) -->
-    <<dependencies>
+    <dependencies>
         <!-- Paper API (Minecraft 1.21.8) -->
         <!-- "provided" = Server already has this—no need to package it in your JAR -->
         <dependency>
