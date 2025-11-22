@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+group = 'johan'
+version = '1.0-SNAPSHOT'
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://repo.codemc.org/repository/maven-public/' }
+}
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT'
+    implementation 'com.github.retrooper:packetevents-spigot:2.5.0'
+    implementation 'org.bstats:bstats-bukkit:3.0.2'
+}
+shadowJar {
+    archiveClassifier = ''
+    relocate 'com.github.retrooper.packetevents', 'johan.anticheat.pe'
+    relocate 'org.bstats', 'johan.anticheat.bstats'
+}
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') { expand props }
+}
