@@ -18,10 +18,11 @@ public class AdvancedAnticheat extends JavaPlugin {
     @Override
     public void onEnable(){
         instance = this;
-        saveDefaultConfig();
+        saveDefaultConfig();          // creates config.yml if absent
         checkManager = new CheckManager();
 
-        // init PacketEvents here instead of onLoad
+        // init PacketEvents first
+        PacketEvents.create(this);
         PacketEvents.getAPI().getSettings()
                 .reEncodeByDefault(true)
                 .checkForUpdates(false);
@@ -43,7 +44,7 @@ public class AdvancedAnticheat extends JavaPlugin {
 
     @Override
     public void onDisable(){
-        PacketEvents.getAPI().terminate();
+        if (PacketEvents.getAPI() != null) PacketEvents.getAPI().terminate();
     }
 
     public static AdvancedAnticheat getInstance(){
