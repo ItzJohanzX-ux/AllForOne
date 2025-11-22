@@ -18,18 +18,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- UPDATED REPOSITORIES (PacketEvents URL is now working!) -->
+    <!-- RELIABLE REPOSITORIES (No more down domains!) -->
     <repositories>
-        <!-- PaperMC: For Bukkit/Paper API -->
+        <!-- Maven Central (Hosts PacketEvents now) -->
+        <repository>
+            <id>maven-central</id>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+
+        <!-- PaperMC (For Bukkit/Paper API) -->
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
-        </repository>
-
-        <!-- PacketEvents: Current working repository -->
-        <repository>
-            <id>retrooper-repo</id>
-            <url>https://repo.retrooper.io/maven2/</url>
         </repository>
     </repositories>
 
@@ -42,7 +42,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- PacketEvents API (v2.10.1 - Compatible with 1.21.8) -->
+        <!-- PacketEvents API (v2.10.1 - From Maven Central!) -->
         <dependency>
             <groupId>com.github.retrooper</groupId>
             <artifactId>packetevents-api</artifactId>
