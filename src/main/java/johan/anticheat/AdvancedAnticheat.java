@@ -1,35 +1,52 @@
 package johan.anticheat;
 
-import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.manager.event.EventManager;
-import org.bukkit.plugin.java.JavaPlugin;
-
+import johan.anticheat.check.CheckManager;
+import johan.anticheat.command.AnticheatCommand;
+import johan.anticheat.listener.PlayerListener;
 import johan.anticheat.listener.PacketListener;
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bstats.bukkit.Metrics;
 
 public class AdvancedAnticheat extends JavaPlugin {
 
+    private static AdvancedAnticheat instance;
+    private CheckManager checkManager;
+
     @Override
-    public void onLoad() {
-        // Create PacketEvents instance
-        PacketEvents.create(this);
-        PacketEvents.get().load();
+    public void onEnable(){
+        instance = this;
+        saveDefaultConfig();
+        checkManager = new CheckManager();
+
+        // PE 2.10 auto-starts – just register listener
+        PacketEvents.getAPI().getEventManager().registerListener(
+                new com.github.retrooper.packetevents.event.PacketListener() {
+                    @Override
+                    public void onPacketReceive(com.github.retrooper.packetevents.event.PacketReceiveEvent event) {
+                        ((PacketListener) new PacketListener()).onPacketReceive(event);
+                    }
+                },
+                PacketListenerPriority.LOW);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        getCommand("anticheat").setExecutor(new AnticheatCommand());
+
+        new Metrics(this, 22222);
     }
 
     @Override
-    public void onEnable() {
-        // Initialize PacketEvents
-        PacketEvents.get().init();
-
-        // Register packet listener
-        EventManager eventManager = PacketEvents.get().getEventManager();
-        eventManager.registerListener(new PacketListener());
-
-        getLogger().info("AdvancedAnticheat enabled with PacketEvents 2.3.0.");
+    public void onDisable(){
+        // PE auto-stops – nothing to do
     }
 
-    @Override
-    public void onDisable() {
-        PacketEvents.get().terminate();
-        getLogger().info("AdvancedAnticheat disabled.");
+    public static AdvancedAnticheat getInstance(){
+        return instance;
+    }
+
+    public CheckManager getCheckManager(){
+        return checkManager;
     }
 }
+
