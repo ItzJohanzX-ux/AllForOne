@@ -38,7 +38,7 @@
     </repositories>
 
 
-    <!-- 4. DEPENDENCIES (WHAT YOUR PLUGIN NEEDS) -->
+    <!-- 4. DEPENDENCIES (FINALLY CORRECT TAGS!) -->
     <<dependencies>
         <!-- Paper API (Minecraft 1.21.8) - Server provides this at runtime -->
         <dependency>
