@@ -13,7 +13,7 @@ public class FlightCheck extends Check {
         if(!profile.isMovement()||profile.getPlayer().getGameMode()==GameMode.CREATIVE||profile.getPlayer().isInsideVehicle()||profile.getPlayer().getLocation().getBlock().getType()==Material.WATER) return;
         double yDelta=profile.getTo().getY()-profile.getFrom().getY(),lastY=profile.getLastYDelta();
         double predicted=(lastY-0.08D)*0.9800000190734863D,diff=Math.abs(yDelta-predicted);
-        double threshold = profile.getPlayer().hasPotionEffect(PotionEffectType.JUMP)? 0.42D : 0.02D;
+        double threshold = profile.getPlayer().hasPotionEffect(org.bukkit.potion.PotionEffectType.getByName("jump"))? 0.42D : 0.02D;
         if(diff>threshold&&yDelta>0&&!MathUtil.onGround(profile.getTo())) flag(profile,"yd="+String.format("%.3f",yDelta));
     }
 }
