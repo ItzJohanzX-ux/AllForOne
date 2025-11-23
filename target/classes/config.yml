@@ -1,0 +1,4 @@
+# AdvancedAnticheat configuration
+flight-threshold: 0.02
+speed-threshold: 0.1
+timer-rate-limit: 22
