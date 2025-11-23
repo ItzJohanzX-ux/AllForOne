@@ -15,33 +15,40 @@ public class AdvancedAnticheat extends JavaPlugin {
     private CheckManager checkManager;
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
         instance = this;
         saveDefaultConfig();
         checkManager = new CheckManager();
 
+        // register PacketEvents listener
         PacketEvents.getAPI().getEventManager().registerListener(
                 new com.github.retrooper.packetevents.event.PacketListener() {
+                    private final PacketListener impl = new PacketListener(); // reuse your class
                     @Override
                     public void onPacketReceive(com.github.retrooper.packetevents.event.PacketReceiveEvent event) {
-                        ((PacketListener) new PacketListener()).onPacketReceive(event);
+                        impl.onPacketReceive(event);
                     }
                 },
-                PacketListenerPriority.LOW);
+                PacketListenerPriority.LOW
+        );
+
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         getCommand("anticheat").setExecutor(new AnticheatCommand());
+
+        getLogger().info("§a✅ AdvancedAnticheat has now been Enabled");
     }
 
     @Override
-    public void onDisable(){
-        // PacketEvents auto-stops – nothing to do
+    public void onDisable() {
+        getLogger().info("§c❌ AdvancedAnticheat has now been Disabled");
+        // PacketEvents auto-stops – nothing else to do
     }
 
-    public static AdvancedAnticheat getInstance(){
+    public static AdvancedAnticheat getInstance() {
         return instance;
     }
 
-    public CheckManager getCheckManager(){
+    public CheckManager getCheckManager() {
         return checkManager;
     }
 }
